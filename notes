@@ -22,4 +22,15 @@ The array "block" holds the specific block of code being executed
 --Now. FOR loop no.1:
 The String "line" literally holds the line being executed, and there are a whole bunch of IFs that determine what to do. They're all pretty easy to make/understand except maybe variables and how I implemented the WHILE kw.
 Variables are simpler than loops so let's start with that. It searches the list and checks each name, if it finds it, returns the index (which can then be used to change the var.), or -1 if not (then a new one with value 0 is created and added to the list).
-Basically, it searches through and counts how many sub-loops there are inside, until it finds the "end" kw that belongs to it. It does this by counting up when a WHILE is found and down when an END is found. When it hits 0, it has found it's end so stops looking further. All the code that is inbetween the WHILE and respective END is put into a block, which is then added to the top of the stack. The line at which the loops stops is recorded in "lineTrace" and the variable conditions in "loopWatch".
+Basically, it searches through and counts how many sub-loops there are inside, until it finds the "end" kw that belongs to it. It does this by counting up when a WHILE is found and down when an END is found. When it hits 0, it has found it's end so stops looking further. All the code that is inbetween the WHILE and respective END is put into a block, which is then added to the top of "stack". The line at which the loops stops is recorded in "lineTrace" and the variable conditions in "loopWatch".
+Once all the code in the block has been checked, it decides whether or not to end the loop based on the conditions in "loopWatch" and the data in "vars". If it should end, it removes the top data (which would control the block that is to end) off the stacks.
+On the next iteration the block at the top of the stack is executed. Either:
+ # The whole code has ended, then the loop doesn't run because the stack would be empty
+ # A loop ended on the last line, so would continue off the end of the code (handled by the if statement)
+ # The last loop did not end, in which case the stack has not changed and the same block of code is executed (the looped code repeats)
+ 
+ Then, at the end there's a var dump so we can see the results. Various info dumps are put in to help debug, but it is quite useful to see each loop.
+ 
+ So yeah. I would've preferred to do this with a nested loop and to just reset the pointer in a FOR loop to control the loops but HECK I have to go complicated.
+ 
+ If you have any queries (ik it's complicated) pm me or something idk maybe leave a comment if you can
