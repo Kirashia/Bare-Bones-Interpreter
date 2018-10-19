@@ -34,3 +34,7 @@ On the next iteration the block at the top of the stack is executed. Either:
  So yeah. I would've preferred to do this with a nested loop and to just reset the pointer in a FOR loop to control the loops but HECK I have to go complicated.
  
  If you have any queries (ik it's complicated) pm me or something idk maybe leave a comment if you can
+
+-----UPDATE FOR WEEK 3-----
+Comments with "##" where low-key easy to implement, adding an if-continue statement to find a "##" at the beginning of the lines
+Added ADD, MUL, SUB, DIV functions which should work like machine code: ADD X 4; would add 4 to the value of X
