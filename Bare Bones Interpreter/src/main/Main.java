@@ -41,6 +41,11 @@ public class Main {
 			
 			for(int i = lineTrace.peek(); i < block.length; i++) {
 				String line = block[i].trim();
+				
+				// Comment
+				if(line.length() > 1 && line.substring(0,2).equals("##"))
+					continue;
+				
 				// Has to find all code in this WHILE block
 				if(line.contains("while")) {
 					int exists = p.varInStack(line.split(" ")[1], vars); 
@@ -63,8 +68,6 @@ public class Main {
 						if(block[n].contains("end")) {
 							c--;
 						}
-						// Add the line to the new block of code
-						newBlock.add(block[n]);
 						
 						// If all loops finished then it can stop finding new code
 						if(c == 0) {
@@ -73,6 +76,9 @@ public class Main {
 							lineTrace.push(0);
 							break;
 						}
+						
+						// Add the line to the new block of code
+						newBlock.add(block[n]);
 						
 						// If there is a nested loop then we know here
 						if(block[n].contains("while")) {
@@ -107,6 +113,42 @@ public class Main {
 					int exists = p.varInStack(line.split(" ")[1], vars); 
 					if(exists >= 0) {
 						vars.get(exists).decr();
+					} else {
+						vars.add(new Variable(line.split(" ")[1], 0));
+					}
+					
+				// ADD by a factor
+				} else if (line.contains("add")) {
+					int exists = p.varInStack(line.split(" ")[1], vars); 
+					if(exists >= 0) {
+						vars.get(exists).add(Float.parseFloat(line.split(" ")[2]));
+					} else {
+						vars.add(new Variable(line.split(" ")[1], 0));
+					}
+					
+				// SUBTRACT by a factor
+				} else if (line.contains("sub")) {
+					int exists = p.varInStack(line.split(" ")[1], vars); 
+					if(exists >= 0) {
+						vars.get(exists).sub(Float.parseFloat(line.split(" ")[2]));
+					} else {
+						vars.add(new Variable(line.split(" ")[1], 0));
+					}
+					
+				// DIVIDE by a factor
+				} else if (line.contains("div")) {
+					int exists = p.varInStack(line.split(" ")[1], vars); 
+					if(exists >= 0) {
+						vars.get(exists).div(Float.parseFloat(line.split(" ")[2]));
+					} else {
+						vars.add(new Variable(line.split(" ")[1], 0));
+					}
+					
+				// MULTIPLY by a factor
+				} else if (line.contains("mul")) {
+					int exists = p.varInStack(line.split(" ")[1], vars); 
+					if(exists >= 0) {
+						vars.get(exists).mul(Float.parseFloat(line.split(" ")[2]));
 					} else {
 						vars.add(new Variable(line.split(" ")[1], 0));
 					}
